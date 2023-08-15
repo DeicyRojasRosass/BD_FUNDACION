@@ -147,3 +147,5 @@ GRANT SELECT ON DocType TO usr_fundacion
 USE [BD_FUNDACION]
 GO
 GRANT INSERT,UPDATE,SELECT ON Customer TO usr_fundacion
+
+---script general
