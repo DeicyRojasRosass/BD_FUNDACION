@@ -1,71 +1,30 @@
 --BD_FUNDACION
 
-
-
-USE BD_FUNDACION
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-
-CREATE TABLE Transaccion(
-	ID INT IDENTITY(1,1) NOT NULL,
-	Customer_id INT NOT NULL,
-	Ref_payco VARCHAR(250) NOT NULL,
-	Description_Transaction VARCHAR(250) NOT NULL,
-	Amount [numeric](11, 2) NOT NULL,
-	Currency_code  VARCHAR(250) NOT NULL,
-	Transaction_id INT NOT NULL,
-	Transaccion_date DATETIME NOT NULL,
-	Cod_transaction_state INT NOT NULL,
-	Transaction_state VARCHAR(250) NOT NULL,
-	Customer_ip VARCHAR(250) NOT NULL,
-	Extra1 INT,
-	Extra2 INT,
-	Extra3 INT,
-	Registration DATETIME NOT NULL,
-	Processed BIT NOT NULL,
-	DateProcessed DATETIME NULL,
- CONSTRAINT [PK_Transaccion] PRIMARY KEY CLUSTERED 
-(
-	[ID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-
-ALTER TABLE [dbo].[Transaccion] ADD  CONSTRAINT [DF_Transaccion_Registration]  DEFAULT (getdate()) FOR [Registration]
-GO
-
-ALTER TABLE [dbo].[Transaccion] ADD  CONSTRAINT [DF_Transaccion_Processed]  DEFAULT ((0)) FOR [Processed]
-GO
-
-
 ----------------------------------------------------------------
 
 
 USE [BD_FUNDACION]
 GO
 
-/****** Object:  Table [dbo].[Contacto]    Script Date: 15/08/2023 11:29:06 ******/
+/****** Object:  Table [dbo].[Customer]    Script Date: 25/08/2023 16:18:14 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE TABLE dbo.Customer(
-	ID INT IDENTITY(1,1) NOT NULL,
-	Customer_Name VARCHAR(100) NOT NULL,
-	Customer_LastName VARCHAR(100) NULL,
-	Customer_document VARCHAR(50) NOT NULL,
-	Customer_doctype INT NULL,
-	Customer_Email VARCHAR(150) NULL,
-	Customer_phone VARCHAR(30) NULL,
-	Customer_movil VARCHAR(30) NULL,
-	Customer_city VARCHAR(100) NULL,
-	Customer_address VARCHAR(500) NULL,
-	Registration DATETIME NOT NULL,
+CREATE TABLE [dbo].[Customer](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[Customer_Name] [varchar](100) NOT NULL,
+	[Customer_LastName] [varchar](100) NULL,
+	[Customer_document] [varchar](50) NOT NULL,
+	[Customer_doctype] [int] NULL,
+	[Customer_Email] [varchar](150) NULL,
+	[Customer_phone] [varchar](30) NULL,
+	[Customer_movil] [varchar](30) NULL,
+	[Customer_city] [varchar](100) NULL,
+	[Customer_address] [varchar](500) NULL,
+	[Registration] [datetime] NOT NULL,
  CONSTRAINT [PK_Customer] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -76,21 +35,29 @@ GO
 ALTER TABLE [dbo].[Customer] ADD  CONSTRAINT [DF_Customer_Registration]  DEFAULT (getdate()) FOR [Registration]
 GO
 
+ALTER TABLE [dbo].[Customer]  WITH CHECK ADD  CONSTRAINT [FK_Customer_DocType] FOREIGN KEY([Customer_doctype])
+REFERENCES [dbo].[DocType] ([ID])
+GO
+
+ALTER TABLE [dbo].[Customer] CHECK CONSTRAINT [FK_Customer_DocType]
+GO
+
+
+
 
 
 -----------------------------------------------------
-
 USE [BD_FUNDACION]
 GO
 
-/****** Object:  Table [dbo].[TipoIdentificacion]    Script Date: 15/08/2023 11:55:34 ******/
+/****** Object:  Table [dbo].[DocType]    Script Date: 25/08/2023 16:23:15 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE TABLE dbo.DocType(
+CREATE TABLE [dbo].[DocType](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[Type_document] [varchar](50) NOT NULL,
 	[alias] [varchar](5) NULL,
@@ -106,10 +73,62 @@ GO
 ALTER TABLE [dbo].[DocType] ADD  CONSTRAINT [DF_DocType_Active]  DEFAULT ((1)) FOR [Active]
 GO
 
-
 ALTER TABLE [dbo].[DocType] ADD  CONSTRAINT [DF_DocType_Registration]  DEFAULT (getdate()) FOR [Registration]
 GO
 
+
+-------------------------------------------------------------------------
+
+USE [BD_FUNDACION]
+GO
+
+/****** Object:  Table [dbo].[Transaction]    Script Date: 25/08/2023 16:23:46 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Transaction](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[Customer_id] [int] NOT NULL,
+	[Ref_payco] [varchar](250) NOT NULL,
+	[Description_Transaction] [varchar](250) NOT NULL,
+	[Amount] [numeric](11, 2) NOT NULL,
+	[Currency_code] [varchar](250) NOT NULL,
+	[Transaction_id] [int] NOT NULL,
+	[Transaction_date] [datetime] NOT NULL,
+	[Cod_transaction_state] [int] NOT NULL,
+	[Transaction_state] [varchar](250) NOT NULL,
+	[Customer_ip] [varchar](250) NOT NULL,
+	[Extra1] [varchar](100) NULL,
+	[Extra2] [varchar](100) NULL,
+	[Extra3] [varchar](100) NULL,
+	[Registration] [datetime] NOT NULL,
+	[Processed] [bit] NOT NULL,
+	[DateProcessed] [datetime] NULL,
+ CONSTRAINT [PK_Transaction] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Transaction] ADD  CONSTRAINT [DF_Transaction_Registration]  DEFAULT (getdate()) FOR [Registration]
+GO
+
+ALTER TABLE [dbo].[Transaction] ADD  CONSTRAINT [DF_Transaction_Processed]  DEFAULT ((0)) FOR [Processed]
+GO
+
+ALTER TABLE [dbo].[Transaction]  WITH CHECK ADD  CONSTRAINT [FK_Transaction_Customer] FOREIGN KEY([Customer_id])
+REFERENCES [dbo].[Customer] ([ID])
+GO
+
+ALTER TABLE [dbo].[Transaction] CHECK CONSTRAINT [FK_Transaction_Customer]
+GO
+
+
+---------------------------------------------------------------------------------------
 
 
 
