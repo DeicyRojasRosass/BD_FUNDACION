@@ -1,4 +1,4 @@
-INSERT INTO DB_FUNDACION.dbo.DocType (Type_document,alias,Active) VALUES 
+INSERT INTO BD_FUNDACION.dbo.DocType (Type_document,alias,Active) VALUES 
 	('Cédula Ciudadanía',	'CC',	1),	
 	('NIT',	'NIT',	1	),
 	('Tarjeta Identidad',	'TI',	1),
