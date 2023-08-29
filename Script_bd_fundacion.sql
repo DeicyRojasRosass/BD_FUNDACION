@@ -143,9 +143,10 @@ ALTER TABLE dbo.Transaccion ADD CONSTRAINT [FK_Transaccion_Customer] FOREIGN KEY
 
 --permisos 
 
+
 USE [master]
 GO
-CREATE LOGIN [usr_fundacion] WITH PASSWORD=N'56rb$q5@XsL@9jds$ZDD', 
+CREATE LOGIN [usr_fundacion] WITH PASSWORD=N'56rb%q5@XsL@9jds%ZDD', 
 DEFAULT_DATABASE=[BD_FUNDACION], DEFAULT_LANGUAGE=[Español], CHECK_EXPIRATION=OFF, CHECK_POLICY=ON
 GO
 
@@ -159,7 +160,7 @@ GO
 
 USE [BD_FUNDACION]
 GO
-GRANT INSERT,UPDATE,SELECT ON Transaccion TO usr_fundacion
+GRANT INSERT,UPDATE,SELECT ON Transaction TO usr_fundacion
 GRANT INSERT,UPDATE,SELECT ON Customer TO usr_fundacion
 GRANT SELECT ON DocType TO usr_fundacion
 
