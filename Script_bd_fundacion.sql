@@ -169,3 +169,24 @@ GO
 GRANT INSERT,UPDATE,SELECT ON Customer TO usr_fundacion
 
 ---script general
+
+--*-nuevo usuario para pruebas para la celula de desarrollo:
+USE [master]
+GO
+CREATE LOGIN [usr_f] WITH PASSWORD=N'deicy1234*', 
+DEFAULT_DATABASE=[BD_FUNDACION], DEFAULT_LANGUAGE=[Español], CHECK_EXPIRATION=OFF, CHECK_POLICY=ON
+GO
+
+USE [BD_FUNDACION]
+CREATE USER [usr_f] FOR LOGIN [usr_f]
+GO
+USE [BD_FUNDACION]
+GO
+ALTER USER [usr_f] WITH DEFAULT_SCHEMA=[dbo]
+GO
+
+USE [BD_FUNDACION]
+GO
+GRANT INSERT,UPDATE,SELECT ON Transaction TO usr_f
+GRANT INSERT,UPDATE,SELECT ON Customer TO usr_f
+GRANT SELECT ON DocType TO usr_f
