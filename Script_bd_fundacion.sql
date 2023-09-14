@@ -137,7 +137,7 @@ ALTER TABLE dbo.Customer ADD CONSTRAINT [FK_Customer_DocType] FOREIGN KEY(Custom
 ALTER TABLE dbo.Transaccion ADD CONSTRAINT [FK_Transaccion_Customer] FOREIGN KEY(Customer_id) REFERENCES [dbo].[Customer] ([ID])
 
 
-
+ ALTER TABLE [BD_FUNDACION].[dbo].[Customer] ADD Id_token INT
 -----------------------------
 
 
